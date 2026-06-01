@@ -54,7 +54,7 @@ export default function DesktopNotice() {
           lineHeight: 1.6,
           maxWidth: 320,
         }}>
-          This portfolio is designed for desktop viewing. Please visit on a larger screen for the full experience.
+          This portfolio is designed for desktop viewing. Please visit on a larger screen for the full experience. Or message me on discord for more info @kahnyy
         </p>
 
         {/* URL hint */}
@@ -65,7 +65,7 @@ export default function DesktopNotice() {
           color: 'rgba(255,255,255,0.2)',
           marginTop: 8,
         }}>
-          kahny.vercel.app
+          kahny.dev
         </div>
       </div>
     </div>
