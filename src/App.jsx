@@ -64,7 +64,7 @@ function AnimatedRoutes() {
         <Route path="/sfx" element={
           <PageTransition variant="sfx"><Sfx src={sfxvideo} /></PageTransition>
         } />
-        <Route path="/CombatTags" element={
+        <Route path="/ctags" element={
           <PageTransition variant="combattags"><CombatTags src={aizen} /></PageTransition>
         } />
       </Routes>

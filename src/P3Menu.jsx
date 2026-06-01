@@ -5,7 +5,7 @@ const ITEMS = [
   { id: "animation",     label: "ANIMATION",      page: "animation",     fontSize: 66, offsetX: 20, offsetY: 8,  skew: -11, skewY: 10 },
   { id: "vfx",           label: "VISUAL EFFECTS", page: "vfx",           fontSize: 66, offsetX: -10, offsetY: 25,  skew: -9,  skewY: 10 },
   { id: "sfx",           label: "SOUND EFFECTS",  page: "sfx",           fontSize: 56, offsetX: 10, offsetY: 15, skew: 0,   skewY: 10 },
-  { id: "CombatTags",    label: "COMBAT TAGS",    page: "CombatTags",    fontSize: 56, offsetX: 5,  offsetY: 10, skew: -4,  skewY: 10 },
+  { id: "CombatTags",    label: "COMBAT TAGS",    page: "ctags",    fontSize: 56, offsetX: 5,  offsetY: 10, skew: -4,  skewY: 10 },
 ];
 
 const CLIP_SHAPES = [

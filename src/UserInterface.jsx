@@ -2,7 +2,6 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import bgVideo from "./assets/UryuUIChangedEND.mp4";
 
-
 import ui1 from "./assets/KaguraUI.png";
 import ui2 from "./assets/KaguraUI.png";
 import ui3 from "./assets/KaguraUI.png";
@@ -11,41 +10,35 @@ import ui5 from "./assets/KaguraUI.png";
 
 const UI_PIECES = [
   {
-    // src: ui1,
     src: ui1,
     title: "Game HUD",
     tag: "Game UI",
     desc: "In-game heads-up display — health, inventory, and minimap layout designed for readability under pressure.",
   },
   {
-    // src: ui2,
     src: ui2,
     title: "Main Menu",
     tag: "Game UI",
     desc: "Cinematic character-select screen with animated bars and role indicators.",
   },
   {
-    // src: ui3,
     src: ui3,
     title: "Inventory System",
     tag: "Game UI",
     desc: "Grid-based item management with tooltip overlays and drag-and-drop zones.",
   },
   {
-    // src: ui4,
     src: ui4,
     title: "Settings Screen",
     tag: "Game UI",
     desc: "Keybindings, audio sliders, and display options — tabbed layout with a clean dark theme.",
   },
   {
-    // src: ui5,
     src: ui5,
     title: "Pause Menu",
     tag: "Game UI",
     desc: "Minimal overlay pause screen with resume, options, and quit — designed not to break immersion.",
   },
-  // ── To add more pieces, copy a block above and paste it here ──
 ];
 
 const MIN_ZOOM = 1;
@@ -53,12 +46,18 @@ const MAX_ZOOM = 5;
 const ZOOM_STEP = 0.4;
 
 export default function UIGallery() {
-  const [mounted, setMounted]     = useState(false);
+  // --- Global Loader States ---
+  const [videoReady, setVideoReady] = useState(false);
+  const [imagesReady, setImagesReady] = useState(false);
+  const [ready, setReady] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
   const [active, setActive]       = useState(0);
   const [lightbox, setLightbox]   = useState(false);
   const [lbIndex, setLbIndex]     = useState(0);
   const [lbVisible, setLbVisible] = useState(false);
   const [scanlines, setScanlines] = useState(true);
+
   useEffect(() => { document.title = "kahny | user interface"; }, []);
 
   // Zoom / pan state
@@ -70,10 +69,49 @@ export default function UIGallery() {
 
   const navigate = useNavigate();
 
+  // 1. Preload all gallery textures/images on mount
   useEffect(() => {
-    const t = setTimeout(() => setMounted(true), 60);
-    return () => clearTimeout(t);
+    let activePreloads = true;
+    const targets = UI_PIECES.map(p => p.src).filter(Boolean);
+    
+    if (targets.length === 0) {
+      setImagesReady(true);
+      return;
+    }
+
+    let loadedCount = 0;
+    targets.forEach((url) => {
+      const img = new Image();
+      img.src = url;
+      img.onload = () => {
+        if (!activePreloads) return;
+        loadedCount++;
+        if (loadedCount === targets.length) {
+          setImagesReady(true);
+        }
+      };
+      img.onerror = () => {
+        if (!activePreloads) return;
+        // Proceed even if asset fails to prevent loading lockups
+        loadedCount++;
+        if (loadedCount === targets.length) {
+          setImagesReady(true);
+        }
+      };
+    });
+
+    return () => { activePreloads = false; };
   }, []);
+
+  // 2. Synchronize readiness and cascade the entrance animations
+  useEffect(() => {
+    if (videoReady && imagesReady) {
+      setReady(true);
+      // Slight offset to allow layouts to parse before triggering CSS slide-ins
+      const t = setTimeout(() => setMounted(true), 60);
+      return () => clearTimeout(t);
+    }
+  }, [videoReady, imagesReady]);
 
   // Reset zoom/pan whenever image changes
   useEffect(() => {
@@ -116,7 +154,6 @@ export default function UIGallery() {
     if (!frame) return;
     const clamped = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, newZoom));
     const rect = frame.getBoundingClientRect();
-    // Zoom toward mouse position
     const ox = originX !== undefined ? originX - rect.left - rect.width / 2  : 0;
     const oy = originY !== undefined ? originY - rect.top  - rect.height / 2 : 0;
     setZoom(prev => {
@@ -130,14 +167,12 @@ export default function UIGallery() {
     });
   }, [clampPan]);
 
-  // Scroll to zoom
   const onWheel = useCallback((e) => {
     e.preventDefault();
     const delta = e.deltaY < 0 ? ZOOM_STEP : -ZOOM_STEP;
     applyZoom(zoom + delta, e.clientX, e.clientY);
   }, [zoom, applyZoom]);
 
-  // Drag to pan
   const onMouseDown = useCallback((e) => {
     if (zoom <= 1) return;
     e.preventDefault();
@@ -156,7 +191,6 @@ export default function UIGallery() {
 
   const onMouseUp = useCallback(() => { isDragging.current = false; }, []);
 
-  // Touch pinch-to-zoom
   const lastTouchDist = useRef(null);
   const onTouchStart = useCallback((e) => {
     if (e.touches.length === 2) {
@@ -197,7 +231,6 @@ export default function UIGallery() {
       if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA") return;
       if (lightbox) {
         if (e.key === "Escape") closeLightbox();
-        // Only navigate when not zoomed in (zoomed: arrow keys pan instead)
         if (zoom <= 1) {
           if (e.key === "ArrowLeft"  || e.key === "a" || e.key === "A") lbNavigate(-1);
           if (e.key === "ArrowRight" || e.key === "d" || e.key === "D") lbNavigate(1);
@@ -221,10 +254,17 @@ export default function UIGallery() {
 
   return (
     <div id="gallery-root">
-      <video src={bgVideo} autoPlay loop muted playsInline className="bg-video" style={{pointerEvents:"none",zIndex:0}} />
+      {/* Background Video triggers standard layout hook */}
+      <video 
+        src={bgVideo} 
+        autoPlay loop muted playsInline 
+        className="bg-video" 
+        onCanPlay={() => setVideoReady(true)}
+        style={{pointerEvents:"none", zIndex:0}} 
+      />
 
       {/* ── Bar stack ── */}
-      <nav className="bar-stack" aria-label="UI work gallery" style={{pointerEvents:"all",zIndex:50}}>
+      <nav className="bar-stack" aria-label="UI work gallery" style={{pointerEvents:"all", zIndex:50}}>
         {UI_PIECES.map((item, i) => (
           <div
             key={i}
@@ -283,12 +323,9 @@ export default function UIGallery() {
           role="dialog" aria-modal="true" aria-label={`${piece.title} fullscreen`}
         >
           <div className={`lightbox__inner${lbVisible ? " lightbox__inner--open" : ""}`}>
-
-            {/* Prev / Next */}
             <button className="lightbox__nav lightbox__nav--prev" onClick={() => lbNavigate(-1)} aria-label="Previous">◄</button>
             <button className="lightbox__nav lightbox__nav--next" onClick={() => lbNavigate(1)}  aria-label="Next">►</button>
 
-            {/* ── Image frame ── */}
             <div
               className="lightbox__frame"
               ref={frameRef}
@@ -326,16 +363,13 @@ export default function UIGallery() {
               {scanlines && <span className="lightbox__scanlines" aria-hidden="true" />}
             </div>
 
-            {/* ── Toolbar ── */}
             <div className="lb-toolbar">
-              {/* Left: info */}
               <div className="lb-toolbar__info">
                 <span className="lb-toolbar__counter">{String(lbIndex+1).padStart(2,"0")} / {String(UI_PIECES.length).padStart(2,"0")}</span>
                 <span className="lb-toolbar__title">{piece.title}</span>
                 <span className="lb-toolbar__tag">{piece.tag}</span>
               </div>
 
-              {/* Center: zoom controls */}
               <div className="lb-toolbar__zoom">
                 <button className="lb-btn" onClick={() => applyZoom(zoom - ZOOM_STEP)} aria-label="Zoom out" title="Zoom out (-)">−</button>
                 <span className="lb-zoom-pct">{zoomPct}%</span>
@@ -344,7 +378,6 @@ export default function UIGallery() {
                 <button className="lb-btn lb-btn--text" onClick={() => { setZoom(MIN_ZOOM); setPan({x:0,y:0}); }} aria-label="Fit to frame" title="Fit">FIT</button>
               </div>
 
-              {/* Right: scanlines toggle + close */}
               <div className="lb-toolbar__right">
                 <button
                   className={`lb-btn lb-btn--text lb-scanline-toggle${scanlines ? " lb-scanline-toggle--on" : ""}`}
@@ -359,7 +392,6 @@ export default function UIGallery() {
               </div>
             </div>
 
-            {/* Description */}
             <p className="lightbox__desc">{piece.desc}</p>
           </div>
         </div>
@@ -557,7 +589,6 @@ export default function UIGallery() {
         }
         .lightbox--open { background: rgba(0,0,0,0.92); }
 
-        /* Inner panel — slides up on open, slides down on close */
         .lightbox__inner {
           position: relative;
           width: min(90vw, 1200px);
@@ -572,7 +603,6 @@ export default function UIGallery() {
           opacity: 1;
           transform: translateY(0) scale(1);
         }
-        /* Exit: faster, slides down slightly */
         .lightbox:not(.lightbox--open) .lightbox__inner {
           opacity: 0;
           transform: translateY(14px) scale(0.98);
@@ -593,18 +623,12 @@ export default function UIGallery() {
         .lightbox__nav--prev { right: calc(100% + 14px); }
         .lightbox__nav--next { left:  calc(100% + 14px); }
 
-        /* Image frame */
-        @keyframes lb-frame-in {
-          0%   { opacity: 0; transform: scale(0.975); }
-          100% { opacity: 1; transform: scale(1); }
-        }
         .lightbox__frame {
           position: relative; width: 100%; aspect-ratio: 16/9;
           background: #060608;
           border: 1px solid rgba(255,255,255,0.08);
           border-bottom: none;
           overflow: hidden;
-          animation: lb-frame-in 0.3s cubic-bezier(0.22,1,0.36,1) both;
         }
         .lightbox__img {
           width: 100%; height: 100%;
@@ -633,11 +657,6 @@ export default function UIGallery() {
           pointer-events: none; z-index: 3;
         }
 
-        @keyframes lb-toolbar-in {
-          0%   { opacity: 0; transform: translateY(6px); }
-          100% { opacity: 1; transform: translateY(0); }
-        }
-        /* ── Toolbar ── */
         .lb-toolbar {
           display: flex; align-items: center;
           background: rgba(6,6,8,0.97);
@@ -645,7 +664,6 @@ export default function UIGallery() {
           border-top: 1px solid rgba(255,255,255,0.06);
           padding: 0 12px;
           height: 42px; gap: 12px;
-          animation: lb-toolbar-in 0.32s cubic-bezier(0.22,1,0.36,1) 0.1s both;
         }
 
         .lb-toolbar__info {
@@ -683,7 +701,6 @@ export default function UIGallery() {
           display: flex; align-items: center; gap: 6px; flex-shrink: 0;
         }
 
-        /* Shared button style */
         .lb-btn {
           height: 28px;
           background: rgba(255,255,255,0.05);
@@ -710,7 +727,6 @@ export default function UIGallery() {
         }
         .lb-btn--close:hover { background: rgba(196,0,26,0.35); border-color: rgba(196,0,26,0.5); color: #fff; }
 
-        /* CRT toggle — lit up when on */
         .lb-scanline-toggle {
           display: flex; align-items: center; gap: 5px;
           color: rgba(255,255,255,0.3); border-color: rgba(255,255,255,0.08);
@@ -721,7 +737,6 @@ export default function UIGallery() {
         }
         .lb-scanline-toggle--on:hover { background: rgba(68,170,255,0.16); color: #6cf; }
 
-        /* tiny CRT icon — 3 horizontal lines */
         .lb-scanline-icon {
           display: inline-flex; flex-direction: column;
           gap: 2px; width: 12px; flex-shrink: 0;
@@ -734,13 +749,11 @@ export default function UIGallery() {
         }
         .lb-scanline-icon::after { width: 75%; }
 
-        /* Description below toolbar */
         .lightbox__desc {
           font-family: 'Barlow Condensed', sans-serif;
           font-size: 13px; font-weight: 300; letter-spacing: 0.4px;
           color: rgba(255,255,255,0.35); line-height: 1.5;
           padding: 8px 12px 0;
-          animation: lb-toolbar-in 0.32s cubic-bezier(0.22,1,0.36,1) 0.16s both;
         }
 
         /* ── Mobile ── */

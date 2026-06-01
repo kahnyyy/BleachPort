@@ -16,6 +16,7 @@ const SFX_PIECES = [
 ];
 
 export default function Sfx({ src: bgSrc }) {
+  const [ready, setReady] = useState(false);
   const navigate    = useNavigate();
   const [active, setActive]       = useState(0);
   const [mounted, setMounted]     = useState(false);
@@ -67,7 +68,16 @@ export default function Sfx({ src: bgSrc }) {
 
   return (
     <div id="menu-screen">
-      <video src={bgSrc} autoPlay loop muted playsInline style={{ pointerEvents: "none" }} />
+    <div className={`video-loader ${ready ? "hidden" : ""}`}>
+        <div className="video-loader-bar">
+          <div className="video-loader-fill" />
+        </div>
+      </div>
+      <video
+        src={bgSrc}
+        autoPlay loop muted playsInline
+        onCanPlay={() => setReady(true)} // 4. Set ready to true when video can play
+      />
 
       {/* Entry reveal — amber flash */}
       <div className="sfx-entry-mask" aria-hidden="true">
