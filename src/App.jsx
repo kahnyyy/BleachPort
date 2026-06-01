@@ -35,38 +35,27 @@ function AnimatedRoutes() {
     <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={
-          <PageTransition><MenuScreen /></PageTransition>
+          <PageTransition variant="default"><MenuScreen /></PageTransition>
         } />
         <Route path="/userinterface" element={
-          <PageTransition variant="about"><UserInterface /></PageTransition>
+          <PageTransition variant="userinterface"><UserInterface /></PageTransition>
         } />
         <Route path="/animation" element={
-          <PageTransition><Animation src={main2} /></PageTransition>
+          <PageTransition variant="animation"><Animation src={main2} /></PageTransition>
         } />
-        <Route
-          path="/sfx"
-          element={
-            <PageTransition>
-              <Sfx src={sfxvideo} />
-            </PageTransition>
-          }
-        />
-        <Route
-          path="/vfx"
-          element={
-            <PageTransition>
-              <Vfx src={main1} />
-            </PageTransition>
-          }
-        />
+        <Route path="/vfx" element={
+          <PageTransition variant="vfx"><Vfx src={main1} /></PageTransition>
+        } />
+        <Route path="/sfx" element={
+          <PageTransition variant="sfx"><Sfx src={sfxvideo} /></PageTransition>
+        } />
         <Route path="/CombatTags" element={
-          <PageTransition><CombatTags src={aizen} /></PageTransition>
+          <PageTransition variant="combattags"><CombatTags src={aizen} /></PageTransition>
         } />
       </Routes>
     </AnimatePresence>
   )
 }
-
 export default function App() {
   return (
     <>

@@ -1,10 +1,8 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useLocation } from "react-router-dom";
 
-const defaultBlocks = ["#000000", "#8b3d01", "#F5842D"];
-
-function DefaultTransition() {
-  return defaultBlocks.map((color, i) => (
+function BlockTransition({ colors }) {
+  return colors.map((color, i) => (
     <motion.div
       key={i}
       style={{
@@ -19,80 +17,18 @@ function DefaultTransition() {
   ));
 }
 
-function AboutTransition() {
-  const panels = [
-    { color: "#01418b", top: "-12vh", left: "-18vw", width: "86vw", delay: 0 },
-    { color: "#2d8af5", top: "24vh",  left: "-10vw", width: "72vw", delay: 0.05 },
-    { color: "#ffffff", top: "58vh",  left: "-14vw", width: "82vw", delay: 0.1 },
-  ];
-  return panels.map((panel, i) => (
-    <motion.div
-      key={i}
-      style={{
-        position: "fixed", top: panel.top, left: panel.left,
-        width: panel.width, height: "26vh", background: panel.color,
-        zIndex: 999 - i, pointerEvents: "none",
-        clipPath: "polygon(0 0, 100% 0, calc(100% - 120px) 100%, 0 100%)",
-        transform: "rotate(-18deg)", transformOrigin: "left center",
-      }}
-      initial={{ x: -500, opacity: 0 }}
-      animate={{ x: [-500, 20, 0], opacity: [1, 1, 0] }}
-      transition={{ duration: 0.52, delay: panel.delay, times: [0, 0.68, 1], ease: [0.22, 1, 0.36, 1] }}
-    />
-  ));
-}
-
-function SocialsTransition() {
-  const stripes = [
-    { color: "#8b3d01", left: "72vw", width: "24vw", delay: 0 },
-    { color: "#F5842D", left: "80vw", width: "14vw", delay: 0.06 },
-    { color: "#ffffff", left: "88vw", width: "8vw",  delay: 0.12 },
-  ];
-  return stripes.map((stripe, i) => (
-    <motion.div
-      key={i}
-      style={{
-        position: "fixed", top: "-6vh", left: stripe.left,
-        width: stripe.width, height: "112vh", background: stripe.color,
-        zIndex: 999 - i, pointerEvents: "none",
-        transform: "skewX(-16deg)", transformOrigin: "top",
-      }}
-      initial={{ y: -1200, opacity: 1 }}
-      animate={{ y: [-1200, 0, 0, 1200] }}
-      transition={{ duration: 0.56, delay: stripe.delay, times: [0, 0.42, 0.58, 1], ease: [0.76, 0, 0.24, 1] }}
-    />
-  ));
-}
-
-function ResumeTransition() {
-  const cards = [
-    { top: "14vh", color: "#8b0101", delay: 0 },
-    { top: "31vh", color: "#f52d2d", delay: 0.05 },
-    { top: "48vh", color: "#ffffff", delay: 0.1 },
-    { top: "65vh", color: "#8b0101", delay: 0.15 },
-  ];
-  return cards.map((card, i) => (
-    <motion.div
-      key={i}
-      style={{
-        position: "fixed", left: "-6vw", top: card.top,
-        width: "78vw", height: "14vh", background: card.color,
-        zIndex: 999 - i, pointerEvents: "none",
-        clipPath: "polygon(0 0, 97% 0, 100% 100%, 3% 100%)",
-        boxShadow: card.color === "#ffffff" ? "10px 0 0 #d63232" : "none",
-      }}
-      initial={{ x: -900, opacity: 1 }}
-      animate={{ x: [-900, 30, 0, 900] }}
-      transition={{ duration: 0.6, delay: card.delay, times: [0, 0.48, 0.7, 1], ease: [0.76, 0, 0.24, 1] }}
-    />
-  ));
-}
+const TRANSITION_COLORS = {
+  default:      ["#000000", "#8b3d01", "#F5842D"],
+  userinterface:["#000000", "#01418b", "#2d8af5"],
+  animation:    ["#000000", "#8b0101", "#c4001a"],
+  vfx:          ["#000000", "#3a6b00", "#8a9a00"],
+  sfx:          ["#000000", "#7a4e00", "#d4920a"],
+  combattags:   ["#000000", "#4a007a", "#7b2fd4"],
+};
 
 function TransitionOverlay({ variant }) {
-  if (variant === "about")   return <AboutTransition />;
-  if (variant === "resume")  return <ResumeTransition />;
-  if (variant === "socials") return <SocialsTransition />;
-  return <DefaultTransition />;
+  const colors = TRANSITION_COLORS[variant] ?? TRANSITION_COLORS.default;
+  return <BlockTransition colors={colors} />;
 }
 
 export default function PageTransition({ children, variant = "default" }) {
