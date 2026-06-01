@@ -47,8 +47,11 @@ eslint.config.js
 index.html
 P3Menu.jsx
 package.json
+public/BleachIcon.png
+public/BrightIcon.png
 public/favicon.svg
 public/icons.svg
+public/new.png
 README.md
 scripts/watch-build.mjs
 src/Animation.jsx
@@ -654,59 +657,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-</file>
-
-<file path="index.html">
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>kahny3</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
-</html>
-</file>
-
-<file path="package.json">
-{
-  "name": "persona3",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "build:watch": "node scripts/watch-build.mjs",
-    "lint": "eslint .",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "@vercel/analytics": "^2.0.1",
-    "framer-motion": "^12.38.0",
-    "react": "^19.2.4",
-    "react-dom": "^19.2.4",
-    "react-router-dom": "^7.14.0"
-  },
-  "devDependencies": {
-    "@eslint/js": "^9.39.4",
-    "@types/react": "^19.2.14",
-    "@types/react-dom": "^19.2.3",
-    "@vitejs/plugin-react": "^6.0.1",
-    "eslint": "^9.39.4",
-    "eslint-plugin-react-hooks": "^7.0.1",
-    "eslint-plugin-react-refresh": "^0.5.2",
-    "globals": "^17.4.0",
-    "vite": "^8.0.1"
-  }
-}
 </file>
 
 <file path="README.md">
@@ -1744,6 +1694,41 @@ export default function Vfx({ src: bgSrc }) {
       </button>
     </div>
   );
+}
+</file>
+
+<file path="package.json">
+{
+  "name": "persona3",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "build:watch": "node scripts/watch-build.mjs",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@vercel/analytics": "^2.0.1",
+    "@vercel/speed-insights": "^2.0.0",
+    "framer-motion": "^12.38.0",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "react-router-dom": "^7.14.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.4",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.1",
+    "eslint": "^9.39.4",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-react-refresh": "^0.5.2",
+    "globals": "^17.4.0",
+    "vite": "^8.0.1"
+  }
 }
 </file>
 
@@ -2912,6 +2897,25 @@ export default function Sfx({ src: bgSrc }) {
 }
 </file>
 
+<file path="index.html">
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/BrightIcon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>kahny</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
+</file>
+
 <file path="src/Animation.jsx">
 import { useEffect, useState, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
@@ -3965,79 +3969,6 @@ export default function P3Menu({ onNavigate }) {
 }
 </file>
 
-<file path="src/App.jsx">
-import { Routes, Route, useLocation, useNavigate } from 'react-router-dom'
-import { Analytics } from "@vercel/analytics/next"
-import { AnimatePresence } from 'framer-motion'
-import menuVideo from './assets/Mainn.mp4'
-import main1 from './assets/main1.mp4'
-import main2 from './assets/main2.mp4'
-import main3 from './assets/main3.mp4'
-import aizen from './assets/aizen.mp4'
-import sfxvideo from './assets/SFX VIDEO.mp4'
-import P3Menu from './P3Menu'
-import VideoPage from './VideoPage'
-import PageTransition from './PageTransition'
-import UserInterface from './UserInterface'
-import Animation from './Animation'
-import Sfx from './Sfx'
-import Vfx from './Vfx'
-import './App.css'
-import CombatTags from './CombatTags'
-
-function MenuScreen() {
-  const navigate = useNavigate()
-  return (
-    <div id="menu-screen">
-      <video src={menuVideo} autoPlay loop muted playsInline />
-      <P3Menu onNavigate={(page) => navigate(`/${page}`)} />
-    </div>
-  )
-}
-
-function AnimatedRoutes() {
-  const location = useLocation()
-  return (
-    <AnimatePresence mode="wait">
-      <Routes location={location} key={location.pathname}>
-        <Route path="/" element={
-          <PageTransition><MenuScreen /></PageTransition>
-        } />
-        <Route path="/userinterface" element={
-          <PageTransition variant="about"><UserInterface /></PageTransition>
-        } />
-        <Route path="/animation" element={
-          <PageTransition><Animation src={main2} /></PageTransition>
-        } />
-        <Route
-          path="/sfx"
-          element={
-            <PageTransition>
-              <Sfx src={sfxvideo} />
-            </PageTransition>
-          }
-        />
-        <Route
-          path="/vfx"
-          element={
-            <PageTransition>
-              <Vfx src={main1} />
-            </PageTransition>
-          }
-        />
-        <Route path="/CombatTags" element={
-          <PageTransition><CombatTags src={aizen} /></PageTransition>
-        } />
-      </Routes>
-    </AnimatePresence>
-  )
-}
-
-export default function App() {
-  return <AnimatedRoutes />
-}
-</file>
-
 <file path="src/UserInterface.jsx">
 import { useState, useEffect, useCallback, useRef } from "react";
 import { useNavigate } from "react-router-dom";
@@ -4797,6 +4728,86 @@ export default function UIGallery() {
       `}</style>
     </div>
   );
+}
+</file>
+
+<file path="src/App.jsx">
+import { Routes, Route, useLocation, useNavigate } from 'react-router-dom'
+import { Analytics } from "@vercel/analytics/react"
+import { SpeedInsights } from "@vercel/speed-insights/react"
+import { AnimatePresence } from 'framer-motion'
+import menuVideo from './assets/Mainn.mp4'
+import main1 from './assets/main1.mp4'
+import main2 from './assets/main2.mp4'
+import main3 from './assets/main3.mp4'
+import aizen from './assets/aizen.mp4'
+import sfxvideo from './assets/SFX VIDEO.mp4'
+import P3Menu from './P3Menu'
+import VideoPage from './VideoPage'
+import PageTransition from './PageTransition'
+import UserInterface from './UserInterface'
+import Animation from './Animation'
+import Sfx from './Sfx'
+import Vfx from './Vfx'
+import './App.css'
+import CombatTags from './CombatTags'
+
+function MenuScreen() {
+  const navigate = useNavigate()
+  return (
+    <div id="menu-screen">
+      <video src={menuVideo} autoPlay loop muted playsInline />
+      <P3Menu onNavigate={(page) => navigate(`/${page}`)} />
+    </div>
+  )
+}
+
+function AnimatedRoutes() {
+  const location = useLocation()
+  return (
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
+        <Route path="/" element={
+          <PageTransition><MenuScreen /></PageTransition>
+        } />
+        <Route path="/userinterface" element={
+          <PageTransition variant="about"><UserInterface /></PageTransition>
+        } />
+        <Route path="/animation" element={
+          <PageTransition><Animation src={main2} /></PageTransition>
+        } />
+        <Route
+          path="/sfx"
+          element={
+            <PageTransition>
+              <Sfx src={sfxvideo} />
+            </PageTransition>
+          }
+        />
+        <Route
+          path="/vfx"
+          element={
+            <PageTransition>
+              <Vfx src={main1} />
+            </PageTransition>
+          }
+        />
+        <Route path="/CombatTags" element={
+          <PageTransition><CombatTags src={aizen} /></PageTransition>
+        } />
+      </Routes>
+    </AnimatePresence>
+  )
+}
+
+export default function App() {
+  return (
+    <>
+      <Analytics />
+      <AnimatedRoutes />
+      <SpeedInsights />
+    </>
+  )
 }
 </file>
 
