@@ -1,6 +1,6 @@
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom'
 import { Analytics } from "@vercel/analytics/react"
-import { DesktopNotice } from './DesktopNotice'
+import DesktopNotice from './DesktopNotice'
 import { SpeedInsights } from "@vercel/speed-insights/react"
 import { AnimatePresence } from 'framer-motion'
 import menuVideo from './assets/Mainn.mp4'

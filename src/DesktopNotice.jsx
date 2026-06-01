@@ -1,31 +1,25 @@
 export default function DesktopNotice() {
   return (
-    <div style={{
-      position: 'fixed', inset: 0, zIndex: 9999,
-      background: '#04060f',
-      display: 'flex', flexDirection: 'column',
-      alignItems: 'center', justifyContent: 'center',
-      padding: '32px',
-      fontFamily: "'Anton', sans-serif",
-    }}>
+    <>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:wght@300;400&display=swap');
-        .dn-root { display: none; }
-        @media (max-width: 900px) { .dn-root { display: flex; } }
+        .dn-root {
+          display: none;
+          position: fixed; inset: 0; z-index: 9999;
+          background: #04060f;
+          flex-direction: column;
+          align-items: center; justify-content: center;
+          padding: 32px; gap: 24px;
+          text-align: center;
+        }
+        @media (max-width: 900px) {
+          .dn-root { display: flex; }
+        }
       `}</style>
 
-      <div className="dn-root" style={{
-        position: 'fixed', inset: 0, zIndex: 9999,
-        background: '#04060f',
-        flexDirection: 'column',
-        alignItems: 'center', justifyContent: 'center',
-        padding: '32px', gap: '24px',
-        textAlign: 'center',
-      }}>
-        {/* Icon */}
+      <div className="dn-root">
         <div style={{ fontSize: 64, lineHeight: 1, marginBottom: 8 }}>🖥️</div>
 
-        {/* Title */}
         <div style={{
           fontFamily: "'Anton', sans-serif",
           fontStyle: 'italic',
@@ -37,14 +31,12 @@ export default function DesktopNotice() {
           DESKTOP<br/>ONLY
         </div>
 
-        {/* Divider */}
         <div style={{
           width: 60, height: 3,
           background: 'linear-gradient(to right, #7b2fd4, #c4001a)',
           borderRadius: 2,
         }} />
 
-        {/* Message */}
         <p style={{
           fontFamily: "'Barlow Condensed', sans-serif",
           fontWeight: 300,
@@ -57,7 +49,6 @@ export default function DesktopNotice() {
           This portfolio is designed for desktop viewing. Please visit on a larger screen for the full experience. Or message me on discord for more info @kahnyy
         </p>
 
-        {/* URL hint */}
         <div style={{
           fontFamily: "'Barlow Condensed', sans-serif",
           fontSize: 13,
@@ -68,6 +59,6 @@ export default function DesktopNotice() {
           kahny.dev
         </div>
       </div>
-    </div>
+    </>
   );
 }

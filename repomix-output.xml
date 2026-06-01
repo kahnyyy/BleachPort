@@ -94,6 +94,7 @@ src/assets/UryuUI.mp4
 src/assets/UryuUIChangedEND.mp4
 src/assets/vite.svg
 src/CombatTags.jsx
+src/DesktopNotice.jsx
 src/FontPreview.jsx
 src/index.css
 src/main.jsx
@@ -1692,6 +1693,82 @@ export default function Vfx({ src: bgSrc }) {
       >
         ◄ BACK
       </button>
+    </div>
+  );
+}
+</file>
+
+<file path="src/DesktopNotice.jsx">
+export default function DesktopNotice() {
+  return (
+    <div style={{
+      position: 'fixed', inset: 0, zIndex: 9999,
+      background: '#04060f',
+      display: 'flex', flexDirection: 'column',
+      alignItems: 'center', justifyContent: 'center',
+      padding: '32px',
+      fontFamily: "'Anton', sans-serif",
+    }}>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:wght@300;400&display=swap');
+        .dn-root { display: none; }
+        @media (max-width: 900px) { .dn-root { display: flex; } }
+      `}</style>
+
+      <div className="dn-root" style={{
+        position: 'fixed', inset: 0, zIndex: 9999,
+        background: '#04060f',
+        flexDirection: 'column',
+        alignItems: 'center', justifyContent: 'center',
+        padding: '32px', gap: '24px',
+        textAlign: 'center',
+      }}>
+        {/* Icon */}
+        <div style={{ fontSize: 64, lineHeight: 1, marginBottom: 8 }}>🖥️</div>
+
+        {/* Title */}
+        <div style={{
+          fontFamily: "'Anton', sans-serif",
+          fontStyle: 'italic',
+          fontSize: 'clamp(36px, 10vw, 56px)',
+          color: '#ffffff',
+          letterSpacing: 3,
+          lineHeight: 0.9,
+        }}>
+          DESKTOP<br/>ONLY
+        </div>
+
+        {/* Divider */}
+        <div style={{
+          width: 60, height: 3,
+          background: 'linear-gradient(to right, #7b2fd4, #c4001a)',
+          borderRadius: 2,
+        }} />
+
+        {/* Message */}
+        <p style={{
+          fontFamily: "'Barlow Condensed', sans-serif",
+          fontWeight: 300,
+          fontSize: 'clamp(14px, 4vw, 18px)',
+          color: 'rgba(255,255,255,0.5)',
+          letterSpacing: 1,
+          lineHeight: 1.6,
+          maxWidth: 320,
+        }}>
+          This portfolio is designed for desktop viewing. Please visit on a larger screen for the full experience. Or message me on discord for more info @kahnyy
+        </p>
+
+        {/* URL hint */}
+        <div style={{
+          fontFamily: "'Barlow Condensed', sans-serif",
+          fontSize: 13,
+          letterSpacing: 2,
+          color: 'rgba(255,255,255,0.2)',
+          marginTop: 8,
+        }}>
+          kahny.dev
+        </div>
+      </div>
     </div>
   );
 }
@@ -4734,6 +4811,7 @@ export default function UIGallery() {
 <file path="src/App.jsx">
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom'
 import { Analytics } from "@vercel/analytics/react"
+import DesktopNotice from './DesktopNotice'
 import { SpeedInsights } from "@vercel/speed-insights/react"
 import { AnimatePresence } from 'framer-motion'
 import menuVideo from './assets/Mainn.mp4'
@@ -4803,6 +4881,7 @@ function AnimatedRoutes() {
 export default function App() {
   return (
     <>
+      <DesktopNotice />
       <Analytics />
       <AnimatedRoutes />
       <SpeedInsights />
