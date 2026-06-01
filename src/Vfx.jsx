@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
+
 import soon from "./assets/animation/soon.mp4";
 
 const VFX_PIECES = [
@@ -22,6 +23,7 @@ export default function Vfx({ src: bgSrc }) {
   const [lbVisible, setLbVisible] = useState(false);
   const previewRef  = useRef(null);
   const lightboxRef = useRef(null);
+  useEffect(() => { document.title = "kahny | visual effects"; }, []);
 
   useEffect(() => {
     const t = setTimeout(() => setMounted(true), 80);

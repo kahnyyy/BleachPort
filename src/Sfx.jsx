@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
+
 import soon from "./assets/animation/soon.mp4";
 import d4c  from "./assets/animation/d4credesignkahny.mp4";
 
@@ -22,7 +23,8 @@ export default function Sfx({ src: bgSrc }) {
   const [lbVisible, setLbVisible] = useState(false);
   const previewRef  = useRef(null);
   const lightboxRef = useRef(null);
-
+  useEffect(() => { document.title = "kahny | sound effects"; }, []);
+  
   useEffect(() => {
     const t = setTimeout(() => setMounted(true), 80);
     return () => clearTimeout(t);

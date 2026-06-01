@@ -3,9 +3,9 @@ import { useState, useEffect } from "react";
 const ITEMS = [
   { id: "userinterface", label: "USER INTERFACE", page: "userinterface", fontSize: 80, offsetX: 0,  offsetY: 0,  skew: -6,  skewY: 10 },
   { id: "animation",     label: "ANIMATION",      page: "animation",     fontSize: 66, offsetX: 20, offsetY: 8,  skew: -11, skewY: 10 },
-  { id: "vfx",           label: "VFX",            page: "vfx",           fontSize: 78, offsetX: 28, offsetY: 6,  skew: -9,  skewY: 10 },
-  { id: "sfx",           label: "SFX",            page: "sfx",           fontSize: 78, offsetX: 36, offsetY: 10, skew: 0,   skewY: 10 },
-  { id: "CombatTags",    label: "COMBAT TAGS",    page: "CombatTags",    fontSize: 56, offsetX: 5,  offsetY: 25, skew: -4,  skewY: 10 },
+  { id: "vfx",           label: "VISUAL EFFECTS", page: "vfx",           fontSize: 66, offsetX: -10, offsetY: 25,  skew: -9,  skewY: 10 },
+  { id: "sfx",           label: "SOUND EFFECTS",  page: "sfx",           fontSize: 56, offsetX: 10, offsetY: 15, skew: 0,   skewY: 10 },
+  { id: "CombatTags",    label: "COMBAT TAGS",    page: "CombatTags",    fontSize: 56, offsetX: 5,  offsetY: 10, skew: -4,  skewY: 10 },
 ];
 
 const CLIP_SHAPES = [

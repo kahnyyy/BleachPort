@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
+
 import soon from "./assets/animation/soon.mp4";
 import arrow from "./assets/CTAGS/Arrow.mp4";
 import heart from "./assets/CTAGS/Heart.mp4";
@@ -27,6 +28,7 @@ export default function Vfx({ src: bgSrc }) {
   const [lbVisible, setLbVisible] = useState(false);
   const previewRef  = useRef(null);
   const lightboxRef = useRef(null);
+  useEffect(() => { document.title = "kahny | combat tags"; }, []);
 
   useEffect(() => {
     const t = setTimeout(() => setMounted(true), 80);

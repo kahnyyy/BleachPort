@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import bgVideo from "./assets/UryuUIChangedEND.mp4";
 
+
 import ui1 from "./assets/KaguraUI.png";
 import ui2 from "./assets/KaguraUI.png";
 import ui3 from "./assets/KaguraUI.png";
@@ -58,6 +59,7 @@ export default function UIGallery() {
   const [lbIndex, setLbIndex]     = useState(0);
   const [lbVisible, setLbVisible] = useState(false);
   const [scanlines, setScanlines] = useState(true);
+  useEffect(() => { document.title = "kahny | user interface"; }, []);
 
   // Zoom / pan state
   const [zoom, setZoom]           = useState(1);

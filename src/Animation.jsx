@@ -23,6 +23,7 @@ export default function Animation({ src: bgSrc }) {
   const [lbVisible, setLbVisible] = useState(false);
   const previewRef  = useRef(null);
   const lightboxRef = useRef(null);
+  useEffect(() => { document.title = "kahny | animation"; }, []);
 
   useEffect(() => {
     const t = setTimeout(() => setMounted(true), 80);

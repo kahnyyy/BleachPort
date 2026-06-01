@@ -1,4 +1,6 @@
-import { Routes, Route, useLocation, useNavigate } from 'react-router-dom'
+import { useState, useEffect } from "react";
+import { Routes, Route, useLocation, useNavigate, } from 'react-router-dom'
+
 import { Analytics } from "@vercel/analytics/react"
 import DesktopNotice from './DesktopNotice'
 import { SpeedInsights } from "@vercel/speed-insights/react"
@@ -21,9 +23,22 @@ import CombatTags from './CombatTags'
 
 function MenuScreen() {
   const navigate = useNavigate()
+  const [ready, setReady] = useState(false)
+
+  useEffect(() => { document.title = "kahny"; }, []);
+
   return (
     <div id="menu-screen">
-      <video src={menuVideo} autoPlay loop muted playsInline />
+      <div className={`video-loader${ready ? " hidden" : ""}`}>
+        <div className="video-loader-bar">
+          <div className="video-loader-fill" />
+        </div>
+      </div>
+      <video
+        src={menuVideo}
+        autoPlay loop muted playsInline
+        onCanPlay={() => setReady(true)}
+      />
       <P3Menu onNavigate={(page) => navigate(`/${page}`)} />
     </div>
   )
