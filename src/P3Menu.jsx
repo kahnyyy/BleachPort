@@ -3,9 +3,9 @@ import { useState, useEffect } from "react";
 const ITEMS = [
   { id: "userinterface", label: "USER INTERFACE", page: "userinterface", fontSize: 80, offsetX: 0,  offsetY: 0,  skew: -6,  skewY: 10 },
   { id: "animation",     label: "ANIMATION",      page: "animation",     fontSize: 66, offsetX: 20, offsetY: 8,  skew: -11, skewY: 10 },
-  { id: "vfx",           label: "VFX",            page: "vfx",           fontSize: 68, offsetX: 8,  offsetY: 6,  skew: 0,   skewY: 10 },
-  { id: "sfx",           label: "SFX",            page: "sfx",           fontSize: 74, offsetX: 16, offsetY: 8,  skew: -3,  skewY: 10 },
-  { id: "CombatTags",    label: "COMBAT TAGS",    page: "CombatTags",    fontSize: 56, offsetX: 10, offsetY: 10,  skew: -4,  skewY: 10 },
+  { id: "vfx",           label: "VFX",            page: "vfx",           fontSize: 78, offsetX: 28, offsetY: 6,  skew: -9,  skewY: 10 },
+  { id: "sfx",           label: "SFX",            page: "sfx",           fontSize: 78, offsetX: 36, offsetY: 10, skew: 0,   skewY: 10 },
+  { id: "CombatTags",    label: "COMBAT TAGS",    page: "CombatTags",    fontSize: 56, offsetX: 5,  offsetY: 25, skew: -4,  skewY: 10 },
 ];
 
 const CLIP_SHAPES = [
@@ -33,9 +33,7 @@ export default function P3Menu({ onNavigate }) {
 
   useEffect(() => {
     const onKey = (e) => {
-      // Don't steal keys from inputs
       if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA") return;
-
       if (e.key === "ArrowUp"   || e.key === "w" || e.key === "W")
         activate(Math.max(0, active - 1));
       if (e.key === "ArrowDown" || e.key === "s" || e.key === "S")
@@ -174,7 +172,6 @@ export default function P3Menu({ onNavigate }) {
         }
         .p3-row.active .p3-label-bright { opacity: 1; }
 
-        /* ── Hint block ── */
         .p3-hint {
           position: absolute;
           bottom: 24px; right: 28px;
@@ -226,6 +223,90 @@ export default function P3Menu({ onNavigate }) {
           display: flex;
           flex-direction: column;
           align-items: flex-start;
+        }
+
+        /* ── TikTok ── */
+        .tt-wrap {
+          position: absolute;
+          bottom: 24px; left: 28px;
+          z-index: 20;
+          display: flex; flex-direction: column;
+          align-items: flex-start;
+          gap: 8px;
+          font-family: 'Anton', sans-serif;
+          pointer-events: all;
+        }
+
+        .tt-accounts {
+          display: flex; flex-direction: column; gap: 6px;
+          overflow: hidden;
+          max-height: 0;
+          opacity: 0;
+          transform: translateY(6px);
+          transition: max-height 0.28s cubic-bezier(0.22,1,0.36,1),
+                      opacity 0.22s ease,
+                      transform 0.22s ease;
+          pointer-events: none;
+        }
+        .tt-wrap:hover .tt-accounts,
+        .tt-wrap:focus-within .tt-accounts {
+          max-height: 120px;
+          opacity: 1;
+          transform: translateY(0);
+          pointer-events: all;
+        }
+
+        .tt-account-btn {
+          display: flex; align-items: center; gap: 8px;
+          background: rgba(255,255,255,0.05);
+          border: 1px solid rgba(255,255,255,0.12);
+          border-radius: 4px;
+          padding: 5px 12px 5px 8px;
+          cursor: pointer; text-decoration: none;
+          transition: background 0.15s ease, border-color 0.15s ease;
+          white-space: nowrap;
+        }
+        .tt-account-btn:hover {
+          background: rgba(255,255,255,0.12);
+          border-color: rgba(255,255,255,0.28);
+        }
+
+        .tt-account-label {
+          display: flex; flex-direction: column; gap: 1px;
+        }
+        .tt-account-type {
+          font-family: 'Barlow Condensed', sans-serif;
+          font-size: 9px; font-weight: 600;
+          letter-spacing: 2px; text-transform: uppercase;
+          color: rgba(255,255,255,0.35);
+        }
+        .tt-account-handle {
+          font-family: 'Anton', sans-serif;
+          font-size: 13px; letter-spacing: 1px;
+          color: rgba(255,255,255,0.85);
+        }
+
+        .tt-icon-btn {
+          display: flex; align-items: center; gap: 8px;
+          background: rgba(255,255,255,0.05);
+          border: 1px solid rgba(255,255,255,0.12);
+          border-radius: 4px;
+          padding: 6px 12px 6px 8px;
+          cursor: pointer;
+          transition: background 0.15s ease, border-color 0.15s ease;
+          font-family: 'Anton', sans-serif;
+          font-size: 12px; letter-spacing: 2px;
+          color: rgba(255,255,255,0.5);
+        }
+        .tt-icon-btn:hover {
+          background: rgba(255,255,255,0.1);
+          border-color: rgba(255,255,255,0.25);
+          color: rgba(255,255,255,0.8);
+        }
+
+        .tt-icon-svg {
+          width: 16px; height: 16px;
+          flex-shrink: 0;
         }
       `}</style>
 
@@ -313,6 +394,49 @@ export default function P3Menu({ onNavigate }) {
             <span>CONFIRM</span>
           </div>
         </div>
+
+        {/* ── TikTok button ── */}
+        <div className="tt-wrap">
+          <div className="tt-accounts">
+            <a
+              href="https://www.tiktok.com/@recraa"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="tt-account-btn"
+            >
+              <svg className="tt-icon-svg" viewBox="0 0 24 24" fill="white">
+                <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.32 6.32 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06z"/>
+              </svg>
+              <div className="tt-account-label">
+                <span className="tt-account-type">Edits</span>
+                <span className="tt-account-handle">@recraa</span>
+              </div>
+            </a>
+
+            <a
+              href="https://www.tiktok.com/@kahnyrblx"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="tt-account-btn"
+            >
+              <svg className="tt-icon-svg" viewBox="0 0 24 24" fill="white">
+                <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.32 6.32 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06z"/>
+              </svg>
+              <div className="tt-account-label">
+                <span className="tt-account-type">Content</span>
+                <span className="tt-account-handle">@kahnyrblx</span>
+              </div>
+            </a>
+          </div>
+
+          <div className="tt-icon-btn">
+            <svg className="tt-icon-svg" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.32 6.32 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06z"/>
+            </svg>
+            TIKTOK
+          </div>
+        </div>
+
       </div>
     </>
   );

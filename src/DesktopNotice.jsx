@@ -18,7 +18,7 @@ export default function DesktopNotice() {
       `}</style>
 
       <div className="dn-root">
-        <div style={{ fontSize: 64, lineHeight: 1, marginBottom: 8 }}>🖥️</div>
+        <div style={{ fontSize: 64, lineHeight: 1, marginBottom: 8 }}></div>
 
         <div style={{
           fontFamily: "'Anton', sans-serif",
