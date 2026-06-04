@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import bgVideo from "./assets/UI_BG_VIDEO.mp4";
+import bgVideo from "./assets/UI_BG_VIDEO_NEW.mp4";
 
 import ui1 from "./assets/UI/KaguraUI.png";
 import ui2 from "./assets/UI/KaguraUI.png";
