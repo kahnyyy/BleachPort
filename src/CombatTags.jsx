@@ -22,6 +22,7 @@ const VFX_PIECES = [
 
 export default function Vfx({ src: bgSrc }) {
   const [ready, setReady] = useState(false);
+  const [bgLoaded, setBgLoaded] = useState(false);
   const navigate    = useNavigate();
   const [active, setActive]       = useState(0);
   const [mounted, setMounted]     = useState(false);
@@ -81,11 +82,15 @@ export default function Vfx({ src: bgSrc }) {
       <video
         src={bgSrc}
         autoPlay loop muted playsInline
-        onCanPlay={() => setReady(true)} // 4. Set ready to true when video can play
+        onCanPlay={() => { setReady(true); setBgLoaded(true); }} // 4. Set ready to true when video can play
       />
 
       {/* Entry reveal mask — olive flash */}
-      <div className="vfx-entry-mask" aria-hidden="true">
+      <div 
+        className="vfx-entry-mask" 
+        aria-hidden="true"
+        style={{ animationPlayState: bgLoaded ? 'running' : 'paused' }} // NEW
+      >
         <video src={bgSrc} autoPlay loop muted playsInline className="vfx-entry-video" />
       </div>
 
@@ -99,6 +104,7 @@ export default function Vfx({ src: bgSrc }) {
           overflow: hidden; background: #6b00a8;
           clip-path: circle(0 at 50% 50%);
           animation: vfx-entry-reveal 1.1s cubic-bezier(0.16,1,0.3,1) forwards;
+          animation-play-state: paused;
           pointer-events: none;
         }
         .vfx-entry-video {
@@ -519,6 +525,7 @@ export default function Vfx({ src: bgSrc }) {
                   ref={previewRef}
                   src={piece.src}
                   autoPlay loop muted playsInline
+                  preload="metadata"
                   className="vfx-preview-video"
                 />
               ) : (

@@ -17,6 +17,7 @@ const SFX_PIECES = [
 
 export default function Sfx({ src: bgSrc }) {
   const [ready, setReady] = useState(false);
+  const [bgLoaded, setBgLoaded] = useState(false);
   const navigate    = useNavigate();
   const [active, setActive]       = useState(0);
   const [mounted, setMounted]     = useState(false);
@@ -76,11 +77,15 @@ export default function Sfx({ src: bgSrc }) {
       <video
         src={bgSrc}
         autoPlay loop muted playsInline
-        onCanPlay={() => setReady(true)} // 4. Set ready to true when video can play
+        onCanPlay={() => { setReady(true); setBgLoaded(true); }} // 4. Set ready to true when video can play
       />
 
       {/* Entry reveal — amber flash */}
-      <div className="sfx-entry-mask" aria-hidden="true">
+      <div 
+        className="sfx-entry-mask" 
+        aria-hidden="true"
+        style={{ animationPlayState: bgLoaded ? 'running' : 'paused' }} // NEW
+      >
         <video src={bgSrc} autoPlay loop muted playsInline className="sfx-entry-video" />
       </div>
 
@@ -94,6 +99,7 @@ export default function Sfx({ src: bgSrc }) {
           overflow: hidden; background: #d4920a;
           clip-path: circle(0 at 50% 50%);
           animation: sfx-entry-reveal 1.1s cubic-bezier(0.16,1,0.3,1) forwards;
+          animation-play-state: paused;
           pointer-events: none;
         }
         .sfx-entry-video {
@@ -513,6 +519,7 @@ export default function Sfx({ src: bgSrc }) {
                   ref={previewRef}
                   src={piece.src}
                   autoPlay loop muted playsInline
+                  preload="metadata"
                   className="sfx-preview-video"
                 />
               ) : (

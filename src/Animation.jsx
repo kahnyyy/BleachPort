@@ -17,6 +17,7 @@ const ANIM_PIECES = [
 
 export default function Animation({ src: bgSrc }) {
   const [ready, setReady] = useState(false);
+  const [bgLoaded, setBgLoaded] = useState(false); // NEW
   const navigate    = useNavigate();
   const [active, setActive]       = useState(0);
   const [mounted, setMounted]     = useState(false);
@@ -77,11 +78,15 @@ export default function Animation({ src: bgSrc }) {
       <video
         src={bgSrc}
         autoPlay loop muted playsInline
-        onCanPlay={() => setReady(true)} // 4. Set ready to true when video can play
+        onCanPlay={() => { setReady(true); setBgLoaded(true); }} // 4. Set ready to true when video can play
       />
 
       {/* Entry reveal mask */}
-      <div className="anim-entry-mask" aria-hidden="true">
+      <div 
+        className="anim-entry-mask" 
+        aria-hidden="true"
+        style={{ animationPlayState: bgLoaded ? 'running' : 'paused' }} // NEW
+      >
         <video src={bgSrc} autoPlay loop muted playsInline className="anim-entry-video" />
       </div>
 
@@ -96,6 +101,7 @@ export default function Animation({ src: bgSrc }) {
           overflow: hidden; background: #c4001a;
           clip-path: circle(0 at 50% 50%);
           animation: anim-entry-reveal 1.1s cubic-bezier(0.16,1,0.3,1) forwards;
+          animation-play-state: paused;
           pointer-events: none;
         }
         .anim-entry-video {
@@ -535,6 +541,7 @@ export default function Animation({ src: bgSrc }) {
                   ref={previewRef}
                   src={piece.src}
                   autoPlay loop muted playsInline
+                  preload="metadata"
                   className="anim-preview-video"
                 />
               ) : (
