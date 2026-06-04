@@ -1,12 +1,12 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import bgVideo from "./assets/UryuUIChangedEND.mp4";
+import bgVideo from "./assets/UI_BG_VIDEO.mp4";
 
-import ui1 from "./assets/KaguraUI.png";
-import ui2 from "./assets/KaguraUI.png";
-import ui3 from "./assets/KaguraUI.png";
-import ui4 from "./assets/KaguraUI.png";
-import ui5 from "./assets/KaguraUI.png";
+import ui1 from "./assets/UI/KaguraUI.png";
+import ui2 from "./assets/UI/KaguraUI.png";
+import ui3 from "./assets/UI/KaguraUI.png";
+import ui4 from "./assets/UI/KaguraUI.png";
+import ui5 from "./assets/UI/KaguraUI.png";
 
 const UI_PIECES = [
   {
