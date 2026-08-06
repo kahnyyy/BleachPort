@@ -31,6 +31,7 @@ function TransitionOverlay({ variant }) {
   return <BlockTransition colors={colors} />;
 }
 
+
 export default function PageTransition({ children, variant = "default" }) {
   const location = useLocation();
   return (

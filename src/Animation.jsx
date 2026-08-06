@@ -69,12 +69,14 @@ export default function Animation({ src: bgSrc }) {
   const piece = ANIM_PIECES[active];
 
   return (
+    
     <div id="menu-screen">
       <div className={`video-loader ${ready ? "hidden" : ""}`}>
         <div className="video-loader-bar">
           <div className="video-loader-fill" />
         </div>
       </div>
+
       <video
         src={bgSrc}
         autoPlay loop muted playsInline
