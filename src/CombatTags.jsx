@@ -3,19 +3,20 @@ import { useNavigate } from "react-router-dom";
 
 
 import soon from "./assets/animation/soon.mp4";
-import arrow from "./assets/CTAGS/Arrow.mp4";
+import spider from "./assets/CTAGS/Spider.mp4";
 import heart from "./assets/CTAGS/Heart.mp4";
-import meanacing from "./assets/CTAGS/Meanacing.mp4";
+import skull from "./assets/CTAGS/Skull.mp4";
 import soul from "./assets/CTAGS/SoulEater.mp4";
-
+import gungi from "./assets/CTAGS/Gungi.mp4";
+import flower from "./assets/CTAGS/Flower.mp4";
 
 const VFX_PIECES = [
   { src: soul, title: "Soul Eater",       tag: "8 FRAME | RESONANCE",    desc: "8 Frame sprite animation" },
+  { src: flower, title: "HP Flower", tag: "16 FRAME | Hells Paradise", desc: "16 Frame sprite animation" },
+  { src: spider, title: "Spider",     tag: "16 FRAME | HXH",     desc: "" },
+  { src: gungi, title: "Gungi",    tag: "12 FRAME | ???", desc: "" },
+  { src: skull, title: "Skull",         tag: "12 FRAME | BG GAME",    desc: "Soon" },
   { src: heart, title: "HXH Heart", tag: "10 FRAME | HXH", desc: "10 Frame sprite animation" },
-  { src: arrow, title: "JJBA Arrow",     tag: "10 FRAME, 4 FRAME, 8 FRAME | STAND INITIATION",     desc: "3 diffrent sprite animations layered" },
-  { src: meanacing, title: "JJBA Meanacing",    tag: "10 FRAME, 4 FRAME, 8 FRAME | STAND INITIATION", desc: "3 diffrent sprite animations layered" },
-  { src: soon, title: "Other",         tag: "Soon",    desc: "Soon" },
-  { src: soon, title: "Other",         tag: "Soon",    desc: "Soon" },
   // ── Add more entries here ──
 ];
 
