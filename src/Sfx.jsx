@@ -3,15 +3,16 @@ import { useNavigate } from "react-router-dom";
 
 
 import soon from "./assets/animation/soon.mp4";
-import d4c  from "./assets/animation/d4credesignkahny.mp4";
+import d4c  from "./assets/sfx/d4credesignkahny.mp4";
+import yujistickman  from "./assets/sfx/kahny sfx 3.mp4";
 
 const SFX_PIECES = [
-  { src: d4c,  title: "D4C Cutscene", tag: "CUTSCENE", desc: "Custom redesigned D4C SFX" },
-  { src: soon, title: "Explosion SFX", tag: "EXPLOSION", desc: "Soon" },
-  { src: soon, title: "Magic SFX",     tag: "MAGIC",     desc: "Soon" },
-  { src: soon, title: "Summon SFX",    tag: "CHARACTER", desc: "Soon" },
-  { src: soon, title: "Other",         tag: "ATTACK",    desc: "Soon" },
-  { src: soon, title: "Other",         tag: "ATTACK",    desc: "Soon" },
+  { src: d4c,  title: "D4C Cutscene",     tag: "CUTSCENE",     desc: "Custom redesigned D4C SFX" },
+  { src: yujistickman, title: "Yuji SFX", tag: "2D ANIMATION", desc: "Custom redesigned Yuji Itadori SFX" },
+  { src: soon, title: "Other",            tag: "ATTACK",       desc: "Soon" },
+  { src: soon, title: "Other",            tag: "ATTACK",       desc: "Soon" },
+  { src: soon, title: "Other",            tag: "ATTACK",       desc: "Soon" },
+  { src: soon, title: "Other",            tag: "ATTACK",       desc: "Soon" },
   // ── Add more entries here ──
 ];
 

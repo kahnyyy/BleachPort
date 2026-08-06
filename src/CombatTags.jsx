@@ -11,12 +11,12 @@ import gungi from "./assets/CTAGS/Gungi.mp4";
 import flower from "./assets/CTAGS/Flower.mp4";
 
 const VFX_PIECES = [
-  { src: soul, title: "Soul Eater",       tag: "8 FRAME | RESONANCE",    desc: "8 Frame sprite animation" },
+  { src: soul, title: "Soul Eater",  tag: "8 FRAME | RESONANCE",       desc: "8  Frame sprite animation" },
   { src: flower, title: "HP Flower", tag: "16 FRAME | Hells Paradise", desc: "16 Frame sprite animation" },
-  { src: spider, title: "Spider",     tag: "16 FRAME | HXH",     desc: "" },
-  { src: gungi, title: "Gungi",    tag: "12 FRAME | ???", desc: "" },
-  { src: skull, title: "Skull",         tag: "12 FRAME | BG GAME",    desc: "Soon" },
-  { src: heart, title: "HXH Heart", tag: "10 FRAME | HXH", desc: "10 Frame sprite animation" },
+  { src: spider, title: "Spider",    tag: "16 FRAME | HXH",            desc: "16 Frame sprite animation" },
+  { src: gungi, title: "Gungi",      tag: "12 FRAME | ???",            desc: "12 Frame sprite animation" },
+  { src: skull, title: "Skull",      tag: "12 FRAME | BG GAME",        desc: "12 Frame sprite animation" },
+  { src: heart, title: "HXH Heart",  tag: "10 FRAME | HXH",            desc: "10 Frame sprite animation" },
   // ── Add more entries here ──
 ];
 

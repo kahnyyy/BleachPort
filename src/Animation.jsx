@@ -6,12 +6,12 @@ import vid1 from "./assets/animation/WalkCycle.mp4";
 import soon from "./assets/animation/soon.mp4";
 
 const ANIM_PIECES = [
-  { src: soon, title: "Punch Cycle",       tag: "ATTACK",       desc: "Soon" },
-  { src: soon, title: "Sword Cycle",      tag: "ATTACK",       desc: "Soon" },
-  { src: vid1, title: "Walk Cycle",  tag: "CHARACTER", desc: "Full character walk cycle with secondary motion." },
-  { src: soon, title: "Idle",    tag: "CHARACTER", desc: "Soon" },
-  { src: soon, title: "Other",     tag: "ATTACK",       desc: "Soon" },
-  { src: soon, title: "Other",    tag: "ATTACK",     desc: "Soon" },
+  { src: vid1, title: "Walk Cycle",  tag: "CHARACTER",    desc: "Full character walk cycle." },
+  { src: soon, title: "Other",       tag: "ATTACK",       desc: "Soon" },
+  { src: soon, title: "Other",       tag: "ATTACK",       desc: "Soon" },
+  { src: soon, title: "Other",       tag: "ATTACK",       desc: "Soon" },
+  { src: soon, title: "Other",       tag: "ATTACK",       desc: "Soon" },
+  { src: soon, title: "Other",       tag: "ATTACK",       desc: "Soon" },
   // ── Add more entries here ──
 ];
 

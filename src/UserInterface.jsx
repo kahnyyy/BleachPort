@@ -11,33 +11,33 @@ import ui5 from "./assets/UI/KaguraUI.png";
 const UI_PIECES = [
   {
     src: ui1,
-    title: "Game HUD",
+    title: "Full Game HUD",
     tag: "Game UI",
-    desc: "In-game heads-up display — health, inventory, and minimap layout designed for readability under pressure.",
+    desc: "In-game heads-up display - health, leaderboard, party, hotbar, ctag, mode bar.",
   },
   {
     src: ui2,
-    title: "Main Menu",
+    title: "Other",
     tag: "Game UI",
-    desc: "Cinematic character-select screen with animated bars and role indicators.",
+    desc: "Soon.",
   },
   {
     src: ui3,
-    title: "Inventory System",
+    title: "Other",
     tag: "Game UI",
-    desc: "Grid-based item management with tooltip overlays and drag-and-drop zones.",
+    desc: "Soon.",
   },
   {
     src: ui4,
-    title: "Settings Screen",
+    title: "Other",
     tag: "Game UI",
-    desc: "Keybindings, audio sliders, and display options — tabbed layout with a clean dark theme.",
+    desc: "Soon.",
   },
   {
     src: ui5,
-    title: "Pause Menu",
+    title: "Other",
     tag: "Game UI",
-    desc: "Minimal overlay pause screen with resume, options, and quit — designed not to break immersion.",
+    desc: "Soon.",
   },
 ];
 

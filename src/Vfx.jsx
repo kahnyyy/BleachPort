@@ -6,9 +6,9 @@ import soon from "./assets/animation/soon.mp4";
 
 const VFX_PIECES = [
   { src: soon, title: "Hit VFX",       tag: "ATTACK",    desc: "Soon" },
-  { src: soon, title: "Explosion VFX", tag: "EXPLOSION", desc: "Soon" },
-  { src: soon, title: "Magic VFX",     tag: "MAGIC",     desc: "Soon" },
-  { src: soon, title: "Summon VFX",    tag: "CHARACTER", desc: "Soon" },
+  { src: soon, title: "Explosion VFX", tag: "ATTACK",    desc: "Soon" },
+  { src: soon, title: "Magic VFX",     tag: "ATTACK",    desc: "Soon" },
+  { src: soon, title: "Other",         tag: "ATTACK",    desc: "Soon" },
   { src: soon, title: "Other",         tag: "ATTACK",    desc: "Soon" },
   { src: soon, title: "Other",         tag: "ATTACK",    desc: "Soon" },
   // ── Add more entries here ──
