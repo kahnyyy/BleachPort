@@ -7,8 +7,8 @@ import ScytheSlash from "./assets/VFX/ScytheSlash.mp4"
 
 const VFX_PIECES = [
   { src: ScytheSlash, title: "Slash VFX",       tag: "ATTACK",    desc: "Red Slash VFX" },
-  { src: soon, title: "Explosion VFX", tag: "ATTACK",    desc: "Soon" },
-  { src: soon, title: "Magic VFX",     tag: "ATTACK",    desc: "Soon" },
+  { src: soon, title: "Other", tag: "ATTACK",    desc: "Soon" },
+  { src: soon, title: "Other",     tag: "ATTACK",    desc: "Soon" },
   { src: soon, title: "Other",         tag: "ATTACK",    desc: "Soon" },
   { src: soon, title: "Other",         tag: "ATTACK",    desc: "Soon" },
   { src: soon, title: "Other",         tag: "ATTACK",    desc: "Soon" },
