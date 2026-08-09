@@ -3,10 +3,10 @@ import { useNavigate } from "react-router-dom";
 
 
 import soon from "./assets/animation/soon.mp4";
-import SyctheSlash from "./assets/VFX/SyctheSlash.mp4"
+import ScytheSlash from "./assets/VFX/ScytheSlash.mp4"
 
 const VFX_PIECES = [
-  { src: SyctheSlash, title: "Slash VFX",       tag: "ATTACK",    desc: "Red Slash VFX" },
+  { src: ScytheSlash, title: "Slash VFX",       tag: "ATTACK",    desc: "Red Slash VFX" },
   { src: soon, title: "Explosion VFX", tag: "ATTACK",    desc: "Soon" },
   { src: soon, title: "Magic VFX",     tag: "ATTACK",    desc: "Soon" },
   { src: soon, title: "Other",         tag: "ATTACK",    desc: "Soon" },
