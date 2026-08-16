@@ -2,10 +2,10 @@ import { useState, useEffect } from "react";
 
 const ITEMS = [
   { id: "userinterface", label: "USER INTERFACE", page: "userinterface", fontSize: 80, offsetX: 0,  offsetY: 0,  skew: -6,  skewY: 10 },
-  { id: "animation",     label: "ANIMATION",      page: "animation",     fontSize: 66, offsetX: 20, offsetY: 8,  skew: -11, skewY: 10 },
-  { id: "vfx",           label: "VISUAL EFFECTS", page: "vfx",           fontSize: 66, offsetX: -10, offsetY: 25,  skew: -9,  skewY: 10 },
+  { id: "animation",     label: "ANIMATION",      page: "animation",     fontSize: 66, offsetX: 20, offsetY: 8,  skew: -11, skewY: 10, locked: true },
+  { id: "vfx",           label: "VISUAL EFFECTS", page: "vfx",           fontSize: 66, offsetX: -10, offsetY: 25, skew: -9,  skewY: 10 },
   { id: "sfx",           label: "SOUND EFFECTS",  page: "sfx",           fontSize: 56, offsetX: 10, offsetY: 15, skew: 0,   skewY: 10 },
-  { id: "CombatTags",    label: "COMBAT TAGS",    page: "ctags",    fontSize: 56, offsetX: 5,  offsetY: 10, skew: -4,  skewY: 10 },
+  { id: "CombatTags",    label: "COMBAT TAGS",    page: "ctags",         fontSize: 56, offsetX: 5,  offsetY: 10, skew: -4,  skewY: 10 },
 ];
 
 const CLIP_SHAPES = [
@@ -20,10 +20,20 @@ export default function P3Menu({ onNavigate }) {
   const [active, setActive] = useState(0);
   const [mounted, setMounted] = useState(false);
   const [animKey, setAnimKey] = useState(0);
+  const [lockShake, setLockShake] = useState(false);
 
   const activate = (idx) => {
+    if (ITEMS[idx].locked) return;
     setActive(idx);
     setAnimKey(k => k + 1);
+  };
+
+  const triggerLockShake = () => {
+    setLockShake(false);
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => setLockShake(true));
+    });
+    setTimeout(() => setLockShake(false), 500);
   };
 
   useEffect(() => {
@@ -87,13 +97,16 @@ export default function P3Menu({ onNavigate }) {
           opacity: 1 !important;
           transform: translateX(0) !important;
         }
+        .p3-row.locked {
+          cursor: not-allowed;
+        }
 
         .p3-glow {
           position: absolute;
           top: 50%; left: 50%;
           transform: translate(-50%, -50%);
           width: 120%; height: 200%;
-          background: radial-gradient(ellipse at center, rgba(255,255,255,0.08) 0%, transparent 70%);
+          background: radial-gradient(ellipse at center, rgba(255, 0, 0, 0.08) 0%, transparent 70%);
           filter: blur(18px);
           z-index: 0;
           pointer-events: none;
@@ -160,7 +173,8 @@ export default function P3Menu({ onNavigate }) {
           transition: color 0.12s ease;
         }
         .p3-row.active .p3-label-dark { color: #222222; }
-        .p3-row:hover:not(.active) .p3-label-dark { color: #ffffff; }
+        .p3-row:hover:not(.active):not(.locked) .p3-label-dark { color: #ffffff; }
+        .p3-row.locked .p3-label-dark { color: #555555; }
 
         .p3-label-bright {
           color: #1a1a1a;
@@ -171,6 +185,75 @@ export default function P3Menu({ onNavigate }) {
           transition: opacity 0.12s ease;
         }
         .p3-row.active .p3-label-bright { opacity: 1; }
+
+        /* ── Lock badge ── */
+        .p3-lock {
+          position: absolute;
+          right: -36px;
+          top: 50%;
+          transform: translateY(-50%);
+          z-index: 10;
+          display: flex;
+          align-items: center;
+          gap: 5px;
+          pointer-events: none;
+        }
+
+        .p3-lock-icon {
+          width: 18px;
+          height: 18px;
+          color: rgba(255, 255, 255, 0.65);
+          transition: color 0.18s ease, transform 0.18s ease;
+          flex-shrink: 0;
+        }
+        .p3-row.locked:hover .p3-lock-icon {
+          color: rgba(255,200,60,0.7);
+        }
+
+        .p3-lock-label {
+          font-family: 'Anton', sans-serif;
+          font-size: 9px;
+          letter-spacing: 2.5px;
+          color: rgba(255, 255, 255, 0.65);
+          text-transform: uppercase;
+          transition: color 0.18s ease;
+          line-height: 1;
+        }
+        .p3-row.locked:hover .p3-lock-label {
+          color: rgba(255,200,60,0.55);
+        }
+
+        @keyframes p3-lock-shake {
+          0%   { transform: translateY(-50%) rotate(0deg); }
+          15%  { transform: translateY(-50%) rotate(-10deg) scale(1.15); }
+          30%  { transform: translateY(-50%) rotate(8deg) scale(1.1); }
+          45%  { transform: translateY(-50%) rotate(-6deg) scale(1.08); }
+          60%  { transform: translateY(-50%) rotate(4deg); }
+          75%  { transform: translateY(-50%) rotate(-2deg); }
+          100% { transform: translateY(-50%) rotate(0deg); }
+        }
+        .p3-lock-icon.shake {
+          animation: p3-lock-shake 0.45s cubic-bezier(0.36,0.07,0.19,0.97) forwards;
+          color: rgba(255,180,40,0.9) !important;
+        }
+
+        /* scanline overlay on locked label */
+        .p3-locked-scanline {
+          position: absolute;
+          inset: 0;
+          z-index: 4;
+          pointer-events: none;
+          background: repeating-linear-gradient(
+            180deg,
+            transparent 0px,
+            transparent 3px,
+            rgba(0,0,0,0.18) 3px,
+            rgba(0,0,0,0.18) 4px
+          );
+          opacity: 0;
+          transition: opacity 0.18s ease;
+        }
+        .p3-row.locked:hover .p3-locked-scanline { opacity: 1; }
 
         .p3-hint {
           position: absolute;
@@ -331,15 +414,20 @@ export default function P3Menu({ onNavigate }) {
               <a
                 key={item.id}
                 href="#"
-                className={`p3-row ${isActive ? "active" : ""} ${mounted ? "mounted" : ""}`}
+                className={`p3-row ${isActive ? "active" : ""} ${mounted ? "mounted" : ""} ${item.locked ? "locked" : ""}`}
                 style={{
                   marginLeft: item.offsetX,
                   marginTop: item.offsetY,
                   transitionDelay: mounted ? `${i * 80}ms` : "0ms",
                 }}
-                onClick={(e) => { e.preventDefault(); onNavigate?.(item.page); }}
-                onMouseEnter={() => activate(i)}
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (item.locked) { triggerLockShake(); return; }
+                  onNavigate?.(item.page);
+                }}
+                onMouseEnter={() => { if (!item.locked) activate(i); }}
                 aria-current={isActive ? "page" : undefined}
+                aria-disabled={item.locked ? "true" : undefined}
               >
                 <div className="p3-glow" />
                 <div
@@ -370,7 +458,26 @@ export default function P3Menu({ onNavigate }) {
                       {item.label}
                     </span>
                   </div>
+                  {item.locked && <div className="p3-locked-scanline" />}
                 </div>
+
+                {item.locked && (
+                  <div className="p3-lock">
+                    <svg
+                      className={`p3-lock-icon${lockShake ? " shake" : ""}`}
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                      <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                    </svg>
+                    <span className="p3-lock-label">COMING SOON</span>
+                  </div>
+                )}
               </a>
             );
           })}
